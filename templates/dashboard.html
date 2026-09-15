@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Employee Dashboard - Capacity Connect
+    </title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7ff;
+            color: #172033;
+        }
+
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #171832;
+            color: white;
+            padding: 28px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .logo-box {
+            width: 43px;
+            height: 43px;
+            background: #696af5;
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-title {
+            color: #8f91b0;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu a {
+            color: #c5c6dc;
+            text-decoration: none;
+            padding: 13px 14px;
+            border-radius: 9px;
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            background: #25264b;
+            color: white;
+        }
+
+        .menu .active {
+            background: #5b5cf0;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logout {
+            margin-top: 24px;
+            border-top: 1px solid #303153;
+            padding-top: 20px;
+        }
+
+
+        /* MAIN */
+
+        .main {
+            margin-left: 250px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+
+        /* TOPBAR */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-small {
+            color: #777f91;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .topbar h1 {
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .topbar p {
+            color: #777f91;
+            font-size: 14px;
+        }
+
+        .profile {
+            background: white;
+            border: 1px solid #e7e8f0;
+            border-radius: 12px;
+            padding: 11px 16px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #ededff;
+            color: #5b5cf0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e7e8f0;
+            border-radius: 16px;
+            padding: 22px;
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 17px;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            background: #ededff;
+            color: #5b5cf0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 19px;
+        }
+
+        .live {
+            color: #16865f;
+            background: #eafff5;
+            padding: 5px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .stat-card h2 {
+            font-size: 29px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #777f91;
+            font-size: 13px;
+        }
+
+
+        /* DASHBOARD GRID */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 22px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e7e8f0;
+            border-radius: 17px;
+            padding: 24px;
+        }
+
+        .card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 23px;
+        }
+
+        .card-head h2 {
+            font-size: 19px;
+            margin-bottom: 5px;
+        }
+
+        .card-head p {
+            color: #777f91;
+            font-size: 12px;
+        }
+
+        .view-link {
+            color: #5b5cf0;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        /* SKILLS */
+
+        .skill {
+            margin-bottom: 22px;
+        }
+
+        .skill:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .skill-name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .skill-gap {
+            color: #5b5cf0;
+            background: #ededff;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .gap-closed {
+            color: #16865f;
+            background: #eafff5;
+        }
+
+        .skill-values {
+            display: flex;
+            justify-content: space-between;
+            color: #8a91a3;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e9eaf2;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #5b5cf0;
+            border-radius: 30px;
+        }
+
+
+        /* RECOMMENDATION */
+
+        .recommend-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b5cf0,
+                    #7778f7
+                );
+
+            border-radius: 15px;
+            padding: 23px;
+            color: white;
+        }
+
+        .recommend-label {
+            display: inline-block;
+            background: rgba(255,255,255,0.16);
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .recommend-box h3 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .recommend-box p {
+            color: rgba(255,255,255,0.82);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 17px;
+        }
+
+        .course-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 19px;
+        }
+
+        .course-meta span {
+            background: rgba(255,255,255,0.14);
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+        }
+
+        .recommend-button {
+            display: inline-block;
+            background: white;
+            color: #5b5cf0;
+            padding: 11px 15px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .recommend-form {
+            display: inline;
+        }
+
+        .recommend-form button {
+            border: none;
+            background: white;
+            color: #5b5cf0;
+            padding: 11px 15px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .all-complete {
+            background: #f1fff8;
+            border: 1px solid #c9f1df;
+            padding: 24px;
+            border-radius: 14px;
+        }
+
+        .all-complete h3 {
+            color: #16865f;
+            margin-bottom: 9px;
+        }
+
+        .all-complete p {
+            color: #66736e;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+
+        /* CURRENT COURSE */
+
+        .current-course {
+            margin-top: 22px;
+        }
+
+        .current-course-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .course-tag {
+            display: inline-block;
+            color: #5b5cf0;
+            background: #ededff;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 11px;
+        }
+
+        .current-course h3 {
+            font-size: 18px;
+            margin-bottom: 7px;
+        }
+
+        .current-course p {
+            color: #777f91;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .learning-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .learning-progress .progress-bar {
+            width: 250px;
+        }
+
+        .learning-progress span {
+            color: #5b5cf0;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .primary-btn {
+            text-decoration: none;
+            background: #5b5cf0;
+            color: white;
+            padding: 11px 14px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .certificate-btn {
+            text-decoration: none;
+            background: #eafff5;
+            color: #16865f;
+            padding: 11px 14px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+            color: #8a91a3;
+            font-size: 13px;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width: 1050px) {
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width: 850px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 25px;
+            }
+
+        }
+
+        @media(max-width: 650px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .current-course-card {
+                grid-template-columns: 1fr;
+            }
+
+            .learning-progress .progress-bar {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-box">
+            CC
+        </div>
+
+        Capacity Connect
+
+    </div>
+
+
+    <div class="menu-title">
+        EMPLOYEE PORTAL
+    </div>
+
+
+    <div class="menu">
+
+        <a
+            href="/dashboard"
+            class="active"
+        >
+            ◈ Dashboard
+        </a>
+
+        <a href="/skills">
+            ◇ My Skills
+        </a>
+
+        <a href="/courses">
+            ▣ Courses
+        </a>
+
+        <a href="/progress">
+            ◉ Progress
+        </a>
+
+        <div class="logout">
+
+            <a href="/logout">
+                ↪ Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div>
+
+            <div class="welcome-small">
+                Welcome back
+            </div>
+
+            <h1>
+                {{ name }} 👋
+            </h1>
+
+            <p>
+                Continue building the skills
+                required for your role.
+            </p>
+
+        </div>
+
+
+        <div class="profile">
+
+            <div class="avatar">
+                {{ name[0] }}
+            </div>
+
+            <strong>
+                {{ name }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- LIVE STATS -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon">
+                    📚
+                </div>
+
+                <span class="live">
+                    LIVE
+                </span>
+
+            </div>
+
+            <h2>
+                {{ stats["total_enrolled"] or 0 }}
+            </h2>
+
+            <p>
+                Enrolled Courses
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <span class="live">
+                    LIVE
+                </span>
+
+            </div>
+
+            <h2>
+                {{ stats["total_completed"] or 0 }}
+            </h2>
+
+            <p>
+                Completed Courses
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon">
+                    ◉
+                </div>
+
+                <span class="live">
+                    LIVE
+                </span>
+
+            </div>
+
+            <h2>
+                {{ stats["average_progress"] or 0 }}%
+            </h2>
+
+            <p>
+                Overall Learning Progress
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- SKILLS + RECOMMENDATION -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- SKILLS -->
+
+        <div class="card">
+
+            <div class="card-head">
+
+                <div>
+
+                    <h2>
+                        Skill Gap Overview
+                    </h2>
+
+                    <p>
+                        Current competency compared
+                        with required levels.
+                    </p>
+
+                </div>
+
+                <a
+                    href="/skills"
+                    class="view-link"
+                >
+                    View All →
+                </a>
+
+            </div>
+
+
+            {% for skill in skills %}
+
+                <div class="skill">
+
+                    <div class="skill-top">
+
+                        <span class="skill-name">
+                            {{ skill["skill_name"] }}
+                        </span>
+
+
+                        {% if skill["skill_gap"] > 0 %}
+
+                            <span class="skill-gap">
+
+                                Gap
+                                {{ skill["skill_gap"] }}%
+
+                            </span>
+
+                        {% else %}
+
+                            <span
+                                class="skill-gap gap-closed"
+                            >
+                                ✓ Gap Closed
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="skill-values">
+
+                        <span>
+
+                            Current:
+                            {{ skill["current_level"] }}%
+
+                        </span>
+
+                        <span>
+
+                            Required:
+                            {{ skill["required_level"] }}%
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width: {{ skill['current_level'] }}%;"
+                        >
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- SMART RECOMMENDATION -->
+
+        <div class="card">
+
+            <div class="card-head">
+
+                <div>
+
+                    <h2>
+                        Smart Recommendation
+                    </h2>
+
+                    <p>
+                        Based on your highest
+                        competency gap.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if priority_skill and recommended_course %}
+
+                <div class="recommend-box">
+
+                    <div class="recommend-label">
+
+                        PRIORITY:
+                        {{ priority_skill["skill_name"] }}
+
+                    </div>
+
+
+                    <h3>
+                        {{ recommended_course["title"] }}
+                    </h3>
+
+
+                    <p>
+
+                        Your
+                        {{ priority_skill["skill_name"] }}
+                        competency is currently
+
+                        {{ priority_skill["current_level"] }}%.
+
+                        Required level is
+
+                        {{ priority_skill["required_level"] }}%.
+
+                        Current skill gap is
+
+                        {{ priority_skill["skill_gap"] }}%.
+
+                    </p>
+
+
+                    <div class="course-meta">
+
+                        <span>
+                            {{ recommended_course["difficulty"] }}
+                        </span>
+
+                        <span>
+                            {{ recommended_course["duration"] }}
+                        </span>
+
+                        <span>
+
+                            {{ recommended_course["modules"] }}
+                            Modules
+
+                        </span>
+
+                    </div>
+
+
+                    {% if recommended_course["enrollment_status"] %}
+
+                        <a
+                            href="/course/{{ recommended_course['id'] }}"
+                            class="recommend-button"
+                        >
+                            Continue Learning →
+                        </a>
+
+                    {% else %}
+
+                        <form
+                            action="/enroll/{{ recommended_course['id'] }}"
+                            method="POST"
+                            class="recommend-form"
+                        >
+
+                            <button type="submit">
+
+                                Start Recommended Course →
+
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+
+            {% elif not priority_skill %}
+
+                <div class="all-complete">
+
+                    <h3>
+                        ✓ All Current Skill Gaps Closed
+                    </h3>
+
+                    <p>
+
+                        You have reached the required
+                        competency level for all
+                        currently assigned skills.
+
+                    </p>
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty">
+
+                    No recommended training
+                    is currently available.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+
+    <!-- MY LEARNING -->
+
+    <div class="card current-course">
+
+        <div class="card-head">
+
+            <div>
+
+                <h2>
+                    My Learning
+                </h2>
+
+                <p>
+                    Continue your latest training activity.
+                </p>
+
+            </div>
+
+
+            <a
+                href="/progress"
+                class="view-link"
+            >
+                Full Progress →
+            </a>
+
+        </div>
+
+
+        {% if current_course %}
+
+            <div class="current-course-card">
+
+                <div>
+
+                    <div class="course-tag">
+                        {{ current_course["skill_name"] }}
+                    </div>
+
+                    <h3>
+                        {{ current_course["title"] }}
+                    </h3>
+
+                    <p>
+
+                        {{ current_course["difficulty"] }}
+
+                        •
+
+                        {{ current_course["duration"] }}
+
+                        •
+
+                        {{ current_course["status"] }}
+
+                    </p>
+
+
+                    <div class="learning-progress">
+
+                        <div class="progress-bar">
+
+                            <div
+                                class="progress-fill"
+                                style="width: {{ current_course['progress'] }}%;"
+                            >
+                            </div>
+
+                        </div>
+
+                        <span>
+                            {{ current_course["progress"] }}%
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="actions">
+
+
+                    {% if current_course["status"] == "Completed" %}
+
+
+                        {% if current_course["certificate_code"] %}
+
+                            <a
+                                href="/certificate/{{ current_course['id'] }}"
+                                class="certificate-btn"
+                            >
+                                🏆 View Certificate
+                            </a>
+
+                        {% endif %}
+
+
+                        <a
+                            href="/course/{{ current_course['id'] }}"
+                            class="primary-btn"
+                        >
+                            Review Course
+                        </a>
+
+
+                    {% else %}
+
+
+                        <a
+                            href="/course/{{ current_course['id'] }}"
+                            class="primary-btn"
+                        >
+                            Continue Learning →
+                        </a>
+
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty">
+
+                You haven't enrolled
+                in any course yet.
+
+                <br><br>
+
+                <a
+                    href="/courses"
+                    class="primary-btn"
+                >
+                    Explore Courses
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

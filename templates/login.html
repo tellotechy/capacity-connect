@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Capacity Connect</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            background: #f5f7ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px;
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            min-height: 580px;
+
+            background: white;
+
+            border-radius: 24px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            box-shadow:
+                0 20px 60px rgba(72,74,180,0.12);
+        }
+
+
+        /* LEFT SIDE */
+
+        .left {
+
+            width: 45%;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #5b5cf0,
+                    #4445d6
+                );
+
+            color: white;
+
+            padding: 60px 45px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 50px;
+        }
+
+
+        .logo-box {
+
+            width: 45px;
+
+            height: 45px;
+
+            background: white;
+
+            color: #5b5cf0;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+
+        .logo h2 {
+
+            font-size: 22px;
+        }
+
+
+        .left h1 {
+
+            font-size: 42px;
+
+            line-height: 1.15;
+
+            margin-bottom: 20px;
+        }
+
+
+        .left p {
+
+            color: #ddddff;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+        }
+
+
+        /* RIGHT SIDE */
+
+        .right {
+
+            width: 55%;
+
+            padding: 55px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .form-box {
+
+            width: 100%;
+
+            max-width: 390px;
+        }
+
+
+        .form-box h2 {
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+
+            color: #172033;
+        }
+
+
+        .subtitle {
+
+            color: #777;
+
+            margin-bottom: 30px;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #394056;
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 1px solid #dfe2eb;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        .form-group input:focus {
+
+            border-color: #5b5cf0;
+        }
+
+
+        .login-btn {
+
+            width: 100%;
+
+            border: none;
+
+            background: #5b5cf0;
+
+            color: white;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .login-btn:hover {
+
+            background: #494ad8;
+        }
+
+
+        .message {
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            margin-bottom: 18px;
+
+            font-size: 14px;
+        }
+
+
+        .error {
+
+            background: #fff0f0;
+
+            color: #d63b3b;
+
+            border: 1px solid #ffd1d1;
+        }
+
+
+        .success {
+
+            background: #effff7;
+
+            color: #16865f;
+
+            border: 1px solid #c9f3df;
+        }
+
+
+        .register-text {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+
+        .register-text a {
+
+            color: #5b5cf0;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #777;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+
+        @media(max-width: 800px) {
+
+            .container {
+
+                flex-direction: column;
+            }
+
+
+            .left,
+            .right {
+
+                width: 100%;
+            }
+
+
+            .left {
+
+                padding: 40px 30px;
+            }
+
+
+            .left h1 {
+
+                font-size: 32px;
+            }
+
+
+            .right {
+
+                padding: 40px 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- LEFT SECTION -->
+
+    <div class="left">
+
+
+        <div class="logo">
+
+
+            <div class="logo-box">
+
+                CC
+
+            </div>
+
+
+            <h2>
+
+                Capacity Connect
+
+            </h2>
+
+
+        </div>
+
+
+        <h1>
+
+            Welcome back.
+
+        </h1>
+
+
+        <p>
+
+            Access your personalized learning dashboard,
+            identify skill gaps, complete recommended courses
+            and track your professional development.
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- RIGHT SECTION -->
+
+    <div class="right">
+
+
+        <div class="form-box">
+
+
+            <h2>
+
+                Login
+
+            </h2>
+
+
+            <p class="subtitle">
+
+                Sign in to your account
+
+            </p>
+
+
+
+            <!-- REGISTRATION SUCCESS MESSAGE -->
+
+            {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="message success">
+
+                            {{ message }}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+
+            <!-- LOGIN ERROR -->
+
+            {% if error %}
+
+                <div class="message error">
+
+                    {{ error }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- LOGIN FORM -->
+
+            <form
+                method="POST"
+                action="/login"
+            >
+
+
+                <div class="form-group">
+
+
+                    <label>
+
+                        Email Address
+
+                    </label>
+
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+
+                </div>
+
+
+
+                <div class="form-group">
+
+
+                    <label>
+
+                        Password
+
+                    </label>
+
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+
+                </div>
+
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+
+                    Login
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- REGISTER LINK -->
+
+            <div class="register-text">
+
+                Don't have an account?
+
+                <a href="/register">
+
+                    Create Account
+
+                </a>
+
+            </div>
+
+
+
+            <a
+                href="/"
+                class="back"
+            >
+
+                ← Back to Home
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

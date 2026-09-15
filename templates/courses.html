@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Courses - Capacity Connect</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7ff;
+            color: #172033;
+        }
+
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #171832;
+            color: white;
+            padding: 28px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .logo-box {
+            width: 43px;
+            height: 43px;
+            background: #696af5;
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-title {
+            color: #8f91b0;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu a {
+            color: #c5c6dc;
+            text-decoration: none;
+            padding: 13px 14px;
+            border-radius: 9px;
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            background: #25264b;
+            color: white;
+        }
+
+        .menu .active {
+            background: #5b5cf0;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logout {
+            margin-top: 24px;
+            border-top: 1px solid #303153;
+            padding-top: 20px;
+        }
+
+
+        /* MAIN */
+
+        .main {
+            margin-left: 250px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+
+        /* HEADER */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .topbar p {
+            color: #777f91;
+            font-size: 14px;
+        }
+
+        .profile {
+            background: white;
+            border: 1px solid #e7e8f0;
+            border-radius: 12px;
+            padding: 11px 16px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #ededff;
+            color: #5b5cf0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+
+        /* RECOMMENDATION */
+
+        .recommendation {
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b5cf0,
+                    #7475f5
+                );
+
+            border-radius: 18px;
+            color: white;
+            padding: 27px;
+            margin-bottom: 28px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .recommendation-label {
+            display: inline-block;
+            background: rgba(255,255,255,0.16);
+            border-radius: 20px;
+            padding: 6px 10px;
+
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: .5px;
+
+            margin-bottom: 13px;
+        }
+
+        .recommendation h2 {
+            font-size: 23px;
+            margin-bottom: 9px;
+        }
+
+        .recommendation p {
+            max-width: 650px;
+            color: rgba(255,255,255,.82);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .gap-box {
+            min-width: 115px;
+            text-align: center;
+            background: rgba(255,255,255,.14);
+            border-radius: 14px;
+            padding: 17px;
+        }
+
+        .gap-box strong {
+            display: block;
+            font-size: 29px;
+            margin-bottom: 4px;
+        }
+
+        .gap-box span {
+            font-size: 11px;
+            color: rgba(255,255,255,.8);
+        }
+
+
+        /* SECTION */
+
+        .section-head {
+            margin-bottom: 20px;
+        }
+
+        .section-head h2 {
+            font-size: 21px;
+            margin-bottom: 6px;
+        }
+
+        .section-head p {
+            color: #777f91;
+            font-size: 13px;
+        }
+
+
+        /* COURSES */
+
+        .course-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            position: relative;
+            background: white;
+            border: 1px solid #e7e8f0;
+            border-radius: 17px;
+            padding: 23px;
+            transition: .2s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(45,48,100,.08);
+        }
+
+        .course-card.recommended {
+            border: 2px solid #5b5cf0;
+        }
+
+        .recommended-tag {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+
+            background: #ededff;
+            color: #5b5cf0;
+
+            border-radius: 20px;
+            padding: 6px 9px;
+
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .skill-icon {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+            background: #ededff;
+            color: #5b5cf0;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            margin-bottom: 17px;
+        }
+
+        .skill-name {
+            color: #5b5cf0;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .course-card h3 {
+            font-size: 18px;
+            line-height: 1.35;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #777f91;
+            font-size: 12px;
+            line-height: 1.65;
+            min-height: 58px;
+            margin-bottom: 17px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 18px;
+        }
+
+        .meta span {
+            background: #f5f6fb;
+            color: #697084;
+            padding: 7px 9px;
+            border-radius: 7px;
+            font-size: 10px;
+        }
+
+        .reason {
+            background: #f7f7ff;
+            border-left: 3px solid #5b5cf0;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 17px;
+
+            font-size: 11px;
+            color: #666e82;
+            line-height: 1.5;
+        }
+
+
+        /* PROGRESS */
+
+        .course-progress {
+            margin-bottom: 17px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+
+            color: #777f91;
+            font-size: 10px;
+        }
+
+        .progress-bar {
+            height: 7px;
+            background: #e9eaf2;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #5b5cf0;
+            border-radius: 30px;
+        }
+
+
+        /* BUTTONS */
+
+        .button {
+            display: block;
+            width: 100%;
+
+            text-decoration: none;
+            text-align: center;
+
+            border: none;
+            cursor: pointer;
+
+            padding: 12px;
+            border-radius: 9px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #5b5cf0;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #4d4edc;
+        }
+
+        .certificate {
+            background: #eafff5;
+            color: #16865f;
+            margin-bottom: 8px;
+        }
+
+        .review {
+            background: #f1f1fb;
+            color: #5b5cf0;
+        }
+
+        .status-completed {
+            display: inline-block;
+            background: #eafff5;
+            color: #16865f;
+
+            padding: 6px 9px;
+            border-radius: 20px;
+
+            font-size: 10px;
+            font-weight: bold;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width: 850px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 25px;
+            }
+
+        }
+
+        @media(max-width: 650px) {
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .recommendation {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-box">
+            CC
+        </div>
+
+        Capacity Connect
+
+    </div>
+
+
+    <div class="menu-title">
+        EMPLOYEE PORTAL
+    </div>
+
+
+    <div class="menu">
+
+        <a href="/dashboard">
+            ◈ Dashboard
+        </a>
+
+        <a href="/skills">
+            ◇ My Skills
+        </a>
+
+        <a
+            href="/courses"
+            class="active"
+        >
+            ▣ Courses
+        </a>
+
+        <a href="/progress">
+            ◉ Progress
+        </a>
+
+        <div class="logout">
+
+            <a href="/logout">
+                ↪ Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="main">
+
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>
+                Training Courses
+            </h1>
+
+            <p>
+                Personalized learning based on
+                your competency requirements.
+            </p>
+
+        </div>
+
+
+        <div class="profile">
+
+            <div class="avatar">
+                {{ name[0] }}
+            </div>
+
+            <strong>
+                {{ name }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    {% if priority_skill %}
+
+        <div class="recommendation">
+
+            <div>
+
+                <div class="recommendation-label">
+                    SMART LEARNING RECOMMENDATION
+                </div>
+
+                <h2>
+
+                    Focus on
+                    {{ priority_skill["skill_name"] }}
+
+                </h2>
+
+                <p>
+
+                    Your current
+                    {{ priority_skill["skill_name"] }}
+                    competency is
+
+                    {{ priority_skill["current_level"] }}%,
+
+                    while your role requires
+
+                    {{ priority_skill["required_level"] }}%.
+
+                    Courses related to this skill
+                    are prioritized below.
+
+                </p>
+
+            </div>
+
+
+            <div class="gap-box">
+
+                <strong>
+                    {{ priority_skill["skill_gap"] }}%
+                </strong>
+
+                <span>
+                    COMPETENCY GAP
+                </span>
+
+            </div>
+
+        </div>
+
+
+    {% else %}
+
+        <div class="recommendation">
+
+            <div>
+
+                <div class="recommendation-label">
+                    COMPETENCY TARGET ACHIEVED
+                </div>
+
+                <h2>
+                    All assigned skill gaps are closed
+                </h2>
+
+                <p>
+                    You have reached the required
+                    competency levels for your
+                    currently assigned skills.
+                </p>
+
+            </div>
+
+            <div class="gap-box">
+
+                <strong>
+                    ✓
+                </strong>
+
+                <span>
+                    TARGET MET
+                </span>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+
+    <div class="section-head">
+
+        <h2>
+            Available Learning
+        </h2>
+
+        <p>
+            Complete training and assessments
+            to improve your competency profile.
+        </p>
+
+    </div>
+
+
+
+    <div class="course-grid">
+
+
+        {% for course in courses %}
+
+
+            <div
+                class="
+                    course-card
+
+                    {% if priority_skill
+                    and course['skill_name']
+                    == priority_skill['skill_name'] %}
+                        recommended
+                    {% endif %}
+                "
+            >
+
+
+                {% if priority_skill
+                and course["skill_name"]
+                == priority_skill["skill_name"] %}
+
+                    <div class="recommended-tag">
+                        ★ RECOMMENDED
+                    </div>
+
+                {% endif %}
+
+
+                <div class="skill-icon">
+
+                    {{ course["skill_name"][0:2] }}
+
+                </div>
+
+
+                <div class="skill-name">
+
+                    {{ course["skill_name"] }}
+
+                </div>
+
+
+                <h3>
+                    {{ course["title"] }}
+                </h3>
+
+
+                <div class="description">
+
+                    {{ course["description"] }}
+
+                </div>
+
+
+                <div class="meta">
+
+                    <span>
+                        {{ course["difficulty"] }}
+                    </span>
+
+                    <span>
+                        {{ course["duration"] }}
+                    </span>
+
+                    <span>
+                        {{ course["modules"] }}
+                        Modules
+                    </span>
+
+                </div>
+
+
+
+                {% if priority_skill
+                and course["skill_name"]
+                == priority_skill["skill_name"] %}
+
+                    <div class="reason">
+
+                        Recommended because you have a
+
+                        <strong>
+                            {{ priority_skill["skill_gap"] }}%
+                        </strong>
+
+                        gap in
+
+                        <strong>
+                            {{ priority_skill["skill_name"] }}
+                        </strong>.
+
+                    </div>
+
+                {% endif %}
+
+
+
+                {% if course["enrollment_status"] %}
+
+
+                    <div class="course-progress">
+
+                        <div class="progress-text">
+
+                            <span>
+                                {{ course["enrollment_status"] }}
+                            </span>
+
+                            <span>
+                                {{ course["enrollment_progress"] or 0 }}%
+                            </span>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div
+                                class="progress-fill"
+                                style="width: {{ course['enrollment_progress'] or 0 }}%;"
+                            >
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                {% endif %}
+
+
+
+                {% if course["enrollment_status"] == "Completed" %}
+
+
+                    <div class="status-completed">
+                        ✓ Training Completed
+                    </div>
+
+
+                    {% if course["certificate_code"] %}
+
+                        <a
+                            href="/certificate/{{ course['id'] }}"
+                            class="button certificate"
+                        >
+                            🏆 View Certificate
+                        </a>
+
+                    {% endif %}
+
+
+                    <a
+                        href="/course/{{ course['id'] }}"
+                        class="button review"
+                    >
+                        Review Course
+                    </a>
+
+
+
+                {% elif course["enrollment_status"] %}
+
+
+                    <a
+                        href="/course/{{ course['id'] }}"
+                        class="button primary"
+                    >
+                        Continue Learning →
+                    </a>
+
+
+
+                {% else %}
+
+
+                    <form
+                        action="/enroll/{{ course['id'] }}"
+                        method="POST"
+                    >
+
+                        <button
+                            type="submit"
+                            class="button primary"
+                        >
+                            Enroll & Start →
+                        </button>
+
+                    </form>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
